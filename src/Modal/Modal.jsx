@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef} from 'react';
 import { Modal } from 'react-bootstrap';
 import robo from '../assets/img/robo.png';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -13,6 +13,7 @@ export default function FormModal({chilren, closeModal, ...props}) {
     const [lineWidth, setLineWidth] = useState(0);
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'December'];
     const [formData, setFormData] = useState({});
+    const formRef = useRef();
 
     const info = [
         {
@@ -63,12 +64,12 @@ export default function FormModal({chilren, closeModal, ...props}) {
         }
 
         if(step === 2) {
-            if(Object.keys(formData).length >= 4) {
+            if(!formData['schedule-call'] && formData['schedule-call'] === 'yes' && Object.keys(formData).length >= 4) {
+                setError({...error, step2: true});
+            } else {
                 setStep(step+1);
                 setError({...error, step2: false});
                 setLineWidth(100);
-            } else {
-                setError({...error, step2: true});
             }
         }
 
@@ -98,8 +99,9 @@ export default function FormModal({chilren, closeModal, ...props}) {
 
     function handleNewRequest() {
         setStep(1);
-        setLineWidth(50);
+        setLineWidth(0);
         setFormData({});
+        formRef.current.reset();
     }
 
     return (
@@ -125,7 +127,7 @@ export default function FormModal({chilren, closeModal, ...props}) {
             </Modal.Header>
                 <Modal.Body>
                    <div className="line" style={{width: lineWidth > 0 ? `calc(${lineWidth+'% + 2em'})` : 0 }}></div>
-                   <form className="py-4 appointment-form">
+                   <form className="py-4 appointment-form" ref={formRef}>
 
                        {/* first step  */}
                         <div className="step1" style={{display: step === 1 ? 'block' : 'none'}}>
@@ -165,12 +167,12 @@ export default function FormModal({chilren, closeModal, ...props}) {
                         <div className="step2" style={{display: step === 2 ? 'block' : 'none'}}>
                             {!formData['schedule-call'] && error.step2 === true && <div className='text-danger'>Please Choose Your Prefared Option from below</div> }
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="schedule-call1" name="schedule-call" class="custom-control-input" value="no" onChange={e => handleDataChange(e)}/>
+                                <input type="radio" id="schedule-call1" name="schedule-call" class="custom-control-input" value="no" onChange={e => handleDataChange(e)} checked={!formData['schedule-call'] || formData['schedule-call'] === 'no'}/>
                                 <label class="custom-control-label" htmlFor="schedule-call1">No, I don’t need to schedule a call</label>
                             </div>
 
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="schedule-call2" name="schedule-call" class="custom-control-input" value="yes" onChange={e => handleDataChange(e)}/>
+                                <input type="radio" id="schedule-call2" name="schedule-call" class="custom-control-input" value="yes" onChange={e => handleDataChange(e)} checked={formData['schedule-call'] === 'yes'}/>
                                 <label class="custom-control-label" htmlFor="schedule-call2">Yes, I want to schedule a call</label>
                             </div>
 
@@ -200,43 +202,43 @@ export default function FormModal({chilren, closeModal, ...props}) {
                                                 </label>
                                             </div>
                                         </div>
+
+                                        <div className="col-md-12">
+                                            <label>When:</label>
+                                        </div>
+
+                                        <div className="col-md-6 form-group">
+                                            {!formData['schedule-date']  && error.step2 === true && <div className='text-danger'>Choose Schedule Date</div> }
+                                            <select name="schedule-date" id="schedule-date" className="form-control custom-select" onClick={e => openPicker(e)}>
+                                                <option defaultValue={formatDate(selectedDate)}>{formatDate(selectedDate)}</option>
+                                            </select>
+                                            <MuiPickersUtilsProvider utils={DateFnsUtils} hidden>
+                                                <KeyboardDatePicker
+                                                    fullWidth
+                                                    format="MM/dd/yyyy"
+                                                    margin="normal"
+                                                    id="date-picker-dialog"
+                                                    label="Pick A Date"
+                                                    value={selectedDate}
+                                                    open={isOpen}
+                                                    onChange={onChangeDateHandler}
+                                                    onDismiss={() => setIsOpen(false)}
+                                                    onAccept={(date) => setIsOpen(false)}
+                                                    showTodayButton={true}
+                                                    disablePast={true}
+                                                />
+                                            </MuiPickersUtilsProvider>
+                                        </div>
+
+                                        <div className="col-md-6 form-group">
+                                            {!formData['schedule-time']  && error.step2 === true && <div className='text-danger'>Choose Schedule time</div> }
+                                            <select name="schedule-time" id="schedule-time" className="form-control custom-select"  onChange={e => handleDataChange(e)}>
+                                                <option value="10AM-11:00AM">10AM - 11:00AM</option>
+                                                <option value="11AM-12:00AM">11AM - 12:00AM</option>
+                                            </select>
+                                        </div>
+
                                     </div>
-                                </div>
-                               
-
-                                <div className="col-md-12">
-                                    <label>When:</label>
-                                </div>
-
-                                <div className="col-md-6 form-group">
-                                    {!formData['schedule-date']  && error.step2 === true && <div className='text-danger'>Choose Schedule Date</div> }
-                                    <select name="schedule-date" id="schedule-date" className="form-control custom-control" onClick={e => openPicker(e)}>
-                                        <option disabled selected>{formatDate(selectedDate)}</option>
-                                    </select>
-                                    <MuiPickersUtilsProvider utils={DateFnsUtils} hidden>
-                                        <KeyboardDatePicker
-                                            fullWidth
-                                            format="MM/dd/yyyy"
-                                            margin="normal"
-                                            id="date-picker-dialog"
-                                            label="Pick A Date"
-                                            value={selectedDate}
-                                            open={isOpen}
-                                            onChange={onChangeDateHandler}
-                                            onDismiss={() => setIsOpen(false)}
-                                            onAccept={(date) => setIsOpen(false)}
-                                            showTodayButton={true}
-                                            disablePast={true}
-                                        />
-                                    </MuiPickersUtilsProvider>
-                                </div>
-
-                                <div className="col-md-6 form-group">
-                                    {!formData['schedule-time']  && error.step2 === true && <div className='text-danger'>Choose Schedule time</div> }
-                                    <select name="schedule-time" id="schedule-time" className="form-control custom-control" onChange={e => handleDataChange(e)}>
-                                        <option value="10AM-11:00AM">10AM - 11:00AM</option>
-                                        <option value="11AM-12:00AM">11AM - 12:00AM</option>
-                                    </select>
                                 </div>
 
                                 <div className="col-md-12 form-group" style={{display: formData['call-type'] === 'phone-call' && formData['schedule-call'] === 'yes' ? 'block' : 'none'}}>
@@ -254,18 +256,25 @@ export default function FormModal({chilren, closeModal, ...props}) {
                             <div className="schedule-details">
                                 <h4>Schedule Details</h4>
                                 <p>We have notified your monitor about your request, hang on tight</p>
-                                <div className="d-flex">
-                                    <p className="icon"><i class="fas fa-calendar-check"></i></p>
-                                    <p className="text">{formData['schedule-date'] ? formatDate(formData['schedule-date']) : ''}</p>
-                                </div>
-                                <div className="d-flex">
+                                
+                                {formData['schedule-date'] &&
+                                    <div className="d-flex">
+                                        <p className="icon"><i class="fas fa-calendar-check"></i></p>
+                                        <p className="text">{formatDate(formData['schedule-date'])}</p>
+                                    </div>}
+
+                                {formData['schedule-time'] &&
+                                    <div className="d-flex">
                                     <p className="icon"><i class="fas fa-clock"></i></p>
-                                    <p className="text">{formData['schedule-time']}</p>
-                                </div>
+                                        <p className="text">{formData['schedule-time']}</p>
+                                    </div>}
+
+
                                 <div className="d-flex">
                                     <p className="icon"><i class="fas fa-user-alt"></i></p>
                                     <p className="text">Test User</p>
                                 </div>
+
                                 {formData['phone'] && 
                                 <div className="d-flex">
                                     <p className="icon"><i class="fas fa-phone-alt"></i></p>
