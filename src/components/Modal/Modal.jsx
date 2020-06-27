@@ -1,6 +1,6 @@
 import React, { useState, useRef} from 'react';
 import { Modal } from 'react-bootstrap';
-import robo from '../assets/img/robo.png';
+import robo from '../../assets/img/robo.png';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker } from "@material-ui/pickers";
@@ -256,28 +256,28 @@ export default function FormModal({chilren, closeModal, ...props}) {
                             <div className="schedule-details">
                                 <h4>Schedule Details</h4>
                                 <p>We have notified your monitor about your request, hang on tight</p>
-                                
+
                                 {formData['schedule-date'] &&
                                     <div className="d-flex">
-                                        <p className="icon"><i class="fas fa-calendar-check"></i></p>
+                                        <p className="icon"><i className="fas fa-calendar-check"></i></p>
                                         <p className="text">{formatDate(formData['schedule-date'])}</p>
                                     </div>}
 
                                 {formData['schedule-time'] &&
                                     <div className="d-flex">
-                                    <p className="icon"><i class="fas fa-clock"></i></p>
+                                    <p className="icon"><i className="fas fa-clock"></i></p>
                                         <p className="text">{formData['schedule-time']}</p>
                                     </div>}
 
 
                                 <div className="d-flex">
-                                    <p className="icon"><i class="fas fa-user-alt"></i></p>
+                                    <p className="icon"><i className="fas fa-user-alt"></i></p>
                                     <p className="text">Test User</p>
                                 </div>
 
                                 {formData['phone'] && 
                                 <div className="d-flex">
-                                    <p className="icon"><i class="fas fa-phone-alt"></i></p>
+                                    <p className="icon"><i className="fas fa-phone-alt"></i></p>
                                     <p className="text">{formData['phone']} <a href="#" onClick={e => updatePhone(e)} className="d-inline ml-4">Update Phone</a></p>
                                 </div>}
                             </div>
