@@ -1,61 +1,35 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
-import { Grid, Box, Typography, Button, Card, CardContent, Avatar} from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
+import { Grid, Box, Typography, Button, Card, CardContent, Avatar} from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import DownloadItem from './DownloadItem';
 import CustomRadioButton from '../utils/CustomButton/CustomRadioButton';
 
 export default function DailyDownload(props) {
+    const history = useHistory();
 
+    function handleComplete() {
+        //this hanlder will take you to the next page
+        history.push('/daily-plan');
+    }
 
     return (
         <Grid container spacing={3}>
 
             <Grid item lg={4}>
                 <Box className="daily-download-list">
-                    <Box className="daily-download-item completed">
-                        <Typography variant="h2">01</Typography>
-                        <Box className="subject-duration">
-                            <Typography variant="h3">MATH 101</Typography>
-                            <Typography variant="body2">45:00 mins</Typography>
-                        </Box>
-                        <i className="fas fa-download"></i>
-                    </Box>
+                   <DownloadItem className='completed'
+                    course={{id: '01', name: 'MATH 101', duration: '45:00 mins'}}/>
 
-                    <Box className="daily-download-item active">
-                        <Typography variant="h2">01</Typography>
-                        <Box className="subject-duration">
-                            <Typography variant="h3">MATH 101</Typography>
-                            <Typography variant="body2">45:00 mins</Typography>
-                        </Box>
-                        <i className="fas fa-download"></i>
-                    </Box>
+                   <DownloadItem className='active'
+                    course={{id: '02', name: 'Physics', duration: '33:00 mins'}}/>
 
-                    <Box className="daily-download-item">
-                        <Typography variant="h2">01</Typography>
-                        <Box className="subject-duration">
-                            <Typography variant="h3">MATH 101</Typography>
-                            <Typography variant="body2">45:00 mins</Typography>
-                        </Box>
-                        <i className="fas fa-download"></i>
-                    </Box>
-
-                    <Box className="daily-download-item">
-                        <Typography variant="h2">01</Typography>
-                        <Box className="subject-duration">
-                            <Typography variant="h3">MATH 101</Typography>
-                            <Typography variant="body2">45:00 mins</Typography>
-                        </Box>
-                        <i className="fas fa-download"></i>
-                    </Box>
-
-                    <Box className="daily-download-item">
-                        <Typography variant="h2">01</Typography>
-                        <Box className="subject-duration">
-                            <Typography variant="h3">MATH 101</Typography>
-                            <Typography variant="body2">45:00 mins</Typography>
-                        </Box>
-                        <i className="fas fa-download"></i>
-                    </Box>
+                   <DownloadItem
+                    course={{id: '01', name: 'MATH 101', duration: '45:00 mins'}}/>
+                    
+                   <DownloadItem
+                    course={{id: '01', name: 'MATH 101', duration: '45:00 mins'}}/>
                 </Box>
             </Grid>
 
@@ -66,7 +40,12 @@ export default function DailyDownload(props) {
                         <Typography variant="body2">Monday, July 2, 2020</Typography>
                     </Box>
                     <Box className="next-button">
-                        <Button variant="contained" color="primary" size="large">Next</Button>
+                        {/* <Button variant="contained" color="primary" size="large">Next</Button> */}
+                        <Button variant="contained" 
+                        className='complete-button'
+                        onClick={handleComplete}>
+                            Complete
+                        </Button>
                     </Box>
                 </Box>
 

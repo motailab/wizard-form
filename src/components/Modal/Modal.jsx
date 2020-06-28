@@ -73,6 +73,7 @@ export default function FormModal({chilren, closeModal, ...props}) {
             }
         }
 
+
     }
 
     function handleModalColse() {
@@ -282,17 +283,19 @@ export default function FormModal({chilren, closeModal, ...props}) {
                                 </div>}
                             </div>
                         </div>
+                        {/**step4 */}
+                        <div className="step4">
 
+                        </div>
                    </form>
                 </Modal.Body>
-            <Modal.Footer className="d-flex justify-content-between">
-              <button className="btn btn-white" onClick={handleModalColse} style={{display: step >= 3 ? 'none' : ''}}>Cancel</button>
-              <button className="btn btn-purple" onClick={nextStep} style={{display: step >= 3 ? 'none' : ''}}>Continue</button>
+                <Modal.Footer className="d-flex justify-content-between">
+                    <button className="btn btn-white" onClick={handleModalColse} style={{display: step >= 3 ? 'none' : ''}}>Cancel</button>
+                    <button className="btn btn-purple" onClick={nextStep} style={{display: step >= 3 ? 'none' : ''}}>Continue</button>
 
-              <button className="btn btn-white" onClick={handleNewRequest} style={{display: step >= 3 ? 'block' : 'none'}}>+ New Request</button>
-              <button className="btn btn-purple" onClick={handleComplete} style={{display: step >= 3 ? 'block' : 'none'}}>Complete</button>
-
-            </Modal.Footer>
+                    <button className="btn btn-white" onClick={handleNewRequest} style={{display: step >= 3 ? 'block' : 'none'}}>+ New Request</button>
+                    <button className="btn btn-purple" onClick={handleComplete} style={{display: step >= 3 ? 'block' : 'none'}}>Complete</button>
+                </Modal.Footer>
         </Modal>
     );
 }

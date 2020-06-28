@@ -665,3 +665,186 @@ select:-moz-focusring {
 .header {
   padding: 2rem 0;
 }
+
+//complete button
+button.complete-button {
+  background-color: #12b2b3;
+  color: #fff;
+  font-weight: 400;
+  &:hover {
+    background-color: #12b2b3;
+  }
+}
+
+.plan-modal {
+  min-width: 25rem;
+  min-height: 20rem;
+  position: absolute;
+  top: 20%;
+  left: 32.5%;
+  background-color: #fff;
+  box-sizing: border-box;
+  padding: 2rem;
+  border-radius: 10px;
+  h2 {
+    color: #383f45;
+    font-size: 1.9rem;
+    font-weight: 700;
+    width: 75%;
+    line-height: 3rem;
+    letter-spacing: .2rem;
+  }
+
+  .plan-modal-action {
+    margin-top: 4rem;
+    .btn-white {
+      margin-right: 2rem;
+    }
+  }
+}
+
+//student list style is goes here
+.student-list {
+  margin-top: 3rem !important;
+
+  .student-list-header {
+    font-family: Muli;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+  
+    h1 {
+      color: #3e3f42;
+      font-size: 1.875rem;
+      font-weight: 700;
+      line-height: 44px
+    }
+  
+    .student-list-action {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: center;
+  
+      .search-bar {
+        position: relative;
+        margin-right: 1rem;
+        .form-control {
+          padding: 1.25rem 0;
+        }
+        i {
+          position: absolute;
+          left: 1rem;
+          top: .8rem;
+        }
+      }
+      .btn-filter {
+        margin-right: 1rem;
+        color: #9ea0a5;
+        font-size: .9rem;
+        i {
+          transform: rotate(90deg);
+          margin-right: .5rem;
+        }
+      }
+      .MuiButton-containedPrimary {
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 22px;
+        i {
+          margin-right: .5rem;
+        }
+      }
+    }
+  }
+}
+
+//utility class
+.label {
+  &-success, &-warning, &-primary, &-danger, &-secondary{
+    display: inline-flex;
+    padding: .3rem .5rem;
+    border-radius: 4px;
+    color: #ffffff;
+    font-family: Muli;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  &-success {
+     background-color: #65b20f;
+  }
+
+  &-warning {
+     background-color: #eed704;
+  }
+
+  &-primary {
+    background-color: #805dfa;
+  }
+
+  &-secondary {
+    background-color: rgba(122, 127, 131, 0.3);
+  }
+
+  &-danger {
+    background-color: #ec5d50;
+  }
+
+}
+
+
+.student-list-table {
+  margin-top: 3rem;
+  font-family: Muli;
+  padding-bottom: 4rem;
+  
+  .MuiTable-root {
+    thead {
+      tr {
+        th {
+          color: #9ea0a5;
+          font-size: 12px;
+          font-weight: 600;
+          line-height: 18px;
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+
+  .avatar-cell {
+    display: flex;
+    .avatar {
+      margin-right: 1rem;
+    }
+
+    .student-info {
+      h6 {
+        color: #1e1f20;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 22px;
+      }
+
+      p {
+        color: #9ea0a5;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 18px;
+      }
+    }
+
+    .action-icon {
+      color: #1e1f20;
+      font-size: 1rem;
+    }
+  }
+
+  .student-list-table-footer {
+    padding: 4rem 0;
+  }
+}

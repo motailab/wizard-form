@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Grid, Card, CardContent, Box, Typography, Button} from '@material-ui/core';
+import { Grid, Card, CardContent, Box, Typography, Button, Modal} from '@material-ui/core';
 
 
 
+//dynamic plan form field if you add any changes in dynamic form field please make your changes here
 const DynamicPlan = props => (
-    <div className="dynamic-plan" key={Math.random()*10000}>
+    <div className="dynamic-plan">
         <div className="form-group">
             <label className="d-flex justify-content-between">Select a task:  <button className="btn text-danger" type="button" onClick={props.onClick}>Delete</button></label>
             <select name="assignment" id="" className="form-control custom-select">
@@ -18,21 +19,35 @@ const DynamicPlan = props => (
 );
 
 export default function DailyPlan(props) {
-
+    const [open, setOpen] = useState(false);
     let [planField, setPlanField] = useState([]);
 
     function addNewPlanField() {
+        //this function will add dynamic field in the form when user click [+new plan] buttton
         planField = [...planField, DynamicPlan];
         setPlanField(planField);
     }
 
     function removeDynamicPlanField(index) {
+        //this function will remove fields from form which is added dynamically
         setPlanField(planField.filter((item, i) => i !== index));
+    }
+
+    function showPlanModal() {
+        setOpen(true);
+    }
+
+    function handleModalClose() {
+        setOpen(false);
     }
 
     return (
         <Grid container justify="center" spacing={4}>
             <Grid item lg={10}>
+                <Box display="flex" paddingY="1rem">
+                    <Button variant="contained" size="large" className="complete-button" style={{marginLeft: 'auto'}} onClick={showPlanModal}>Complete</Button>
+                </Box>
+
                 <Card>
                     <CardContent>
                         <Box className="plan-header">
@@ -72,8 +87,11 @@ export default function DailyPlan(props) {
                                 </div>
                             </div>
 
-                            <div className="new-field-container">
-                                {planField.map((Item, index) => <Item onClick={() => removeDynamicPlanField(index)} />)}
+                            <div className="dynamic-field-container">
+                                {/**rendering dynamic fields here */}
+                                {planField.map((Item, index) => (
+                                     <Item key={Math.random()*10000} onClick={() => removeDynamicPlanField(index)} />
+                                ))}
                             </div>
 
                             <div className="form-group">
@@ -88,6 +106,18 @@ export default function DailyPlan(props) {
                     </CardContent>
                 </Card>
             </Grid>
+
+            <Modal open={open} onClose={handleModalClose}>
+                {/* plan modal  */}
+                <Box className="plan-modal">
+                    <Typography variant="h2">Do you need some help today?</Typography>
+                    <Box className="plan-modal-action">
+                        <Button variant="contained" className="btn-white" size="large">No, I don’t need help</Button>
+                        <Button variant="contained" size="large" color="primary">Yes, I need Help</Button>
+                    </Box>
+                </Box>
+            </Modal>
+            
         </Grid>
     );
 }
