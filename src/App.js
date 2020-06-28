@@ -13,8 +13,8 @@ function App() {
       <Router>
         <Switch>
             <AppRoute path="/daily-plan" layout={HomeLayout} component={DailyPlan}/>
-            <AppRoute path="/wizard-form" layout={HomeLayout} component={DailyDownload}/>
             <AppRoute path="/wizard-form/dashboard" layout={DashboardLayout} component={StudentList}/>
+            <AppRoute path="/wizard-form" layout={HomeLayout} component={DailyDownload}/>
             <AppRoute path="/" layout={HomeLayout} component={DailyDownload}/>
         </Switch>
       </Router>
